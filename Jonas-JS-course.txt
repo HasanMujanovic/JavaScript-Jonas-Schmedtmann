@@ -1,0 +1,718 @@
+Vrste funkcija: 
+
+Dot vs Bracket
+
+we use object.something when somethnig actually exists in object
+if for example we had 
+const objectBracket = prompt('Napis nesto)
+then we would use object[objectBracket] beacuse we dont have variable called objectBracket in object but we have the value of the prompt as the variable in object
+// Function declaration
+function nazivFunkcije(parametar) {
+  return 2037 - parametar;
+}
+
+// Function expression
+const nazivFunkcije = function (parametar) {
+  return 2037 - parametar;
+};
+
+// Arrow function
+const nazivFunkcije = (parametar) => 2037 - parametar;
+
+// Pozivanje funcikije
+const pozivanjeFunkcije = nazivFunkcije(argument);
+
+------------------------------------------------------------------------------------------------------------------
+// How JS works behind the scenes //
+
+--Java script is:
+1. HIGH-LEVEL language, where we do not have to manage resources at all because these languages have so-called abstractions that take all of that work away from us. This makes the language easier to learn and to use, but the downside is that programs will never be as fast or as optimized as for example, C programs.
+
+2. Now, one of the powerful tools that takes memory management away from us developers is GARBAGE-COLLECTION, which is basically an algorithm inside the JavaScript engine, which automatically removes old, unused objects from the computer memory in order not to clog it up with unnecessary stuff.
+
+3. an interpreted or just-in-time compiled language.
+
+4. Now, one of the things that makes JavaScript so popular is the fact that it's a multi-paradigm language. In programming, a paradigm is an approach and an overall mindset of structuring our code, which will ultimately direct the coding style and technique in a project that uses a certain paradigm.
+Now, three popular paradigm:
+are procedural, object-oriented, and functional programming.
+
+5. So, about the object-oriented nature of JavaScript, it is a prototype-based, object-oriented approach. Well, first, almost everything in JavaScript is an object, except for primitive values such as numbers, strings, et cetera. But arrays, for example, are just object. Now, have you ever wondered why we can create an array and then use the push method on it, for example? Well, it's because of prototypal inheritance. Basically, we create arrays from an array blueprint, which is like a template and this is called the prototype. This prototype contains all the array methods and the arrays that we create in our code then inherit the methods from the blueprint so that we can use them on the arrays.
+
+6. JavaScript is a language with first-class functions, which simply means that functions are treated just as regular variables. So, we can pass functions into other functions and we can even return functions from functions.
+
+7 .JavaScript is a dynamic language and dynamic actually means dynamically-typed. So as we've already seen, in JavaScript, we don't assign data types to variables. Instead, they only became known when the JavaScript engine executes our code. Also, the type of variables can easily be changed as we reassign variables. 
+
+8. But anyway, let's now finally talk about the single-thread and the non-blocking event loop concurrency model.
+First, what actually is a concurrency model? Well, it's just a fancy term that means how the JavaScript engine handles multiple tasks happening at the same time. JavaScript itself runs in one single-thread, which means that it can only do one thing at a time and therefore we need a way of handling multiple things happening at the same time.
+So basically, the thread is where our code is actually executed in a machine's processor. But what if there is a long-running task, like fetching data from a remote server? Well, it sounds like that would block the single thread where the code is running, right? But of course we don't want that. What we want is so-called non-blocking behavior and how do we achieve that? Well, by using a so-called event loop. The event loop takes long-running tasks, executes them in the background and then puts them back in the main thread once they are finished.
+
+-- Execution Contexts and The Call Stack
+Well, an execution context is an abstract concept. But I define it basically as an environment in which a piece of JavaScript is executed. It's like a box that stores all the necessary information for some code to be executed. Such as local variables or arguments passed into a function. So, JavaScript code always runs inside an execution context.
+
+Call stack - Place where execution contexts get stacked on top of each
+other, to keep track of where we are in execution
+
+-- Scope and The Scope Chain
+Scoping asks the question Where do variables live? or Where can we access
+a certain variable, and where not
+
+there are 4 types of scope in JS: The Global scope, scoped defined by function
+and scopes defined by blocks(if, for loop)
+
+let i const are blocke-scoped
+var is function-scoped
+
+In JS we have lexical scoping, so the rules of where we can acces a variable 
+are based on exactly where in the code functions and blocks are written
+ **Scope chain - Child scope has the acces to the information of the parent scope, but parent scope can never have acces to the information of the child scope.
+
+When a variable is not in the current scope. the engine looks up in the scope 
+chain until it finds the variable its looking for. This is called
+variable lookup
+
+The scope chain has nothing to do with the order in which functions are called. 
+It does not affect the scope chain at all
+
+--This keyword 
+Special variable that is created for every execution context(every function). Takes the value of (points to) the 'owner' of the function in which this keyword is used
+ 
+This is NOT static. It depends on how the function is called and its value is only assigned when the function is actually called
+
+When function is called as:
+
+Method - this = Object that is calling the method
+Simple function call - this = undefined (In strict mode otherwise: window(in the browser))
+Arrow functions (dont get own this) - this = this of surrounding function(lexical this)
+Event listener - this = DOM element that the handler is attached to
+
+-----------------------------------------------------------------------------------------------------
+// Data Structures, Modern Operators and Strings //
+
+-- Destructuring arrays
+So destructuring is an ES6 feature and it's basically a way of unpacking values from an array or an object into separate variables. So in other words destructuring is to break a complex data structure down into a smaller data structure like a variable.
+
+const arr = [2, 3, 4];
+const [x, y, z] = arr;
+
+//destructuring inside of destructuring
+const [i, , [j, k]] = nested;
+console.log(i, j, k);
+
+-- Destructuring objects
+To destructure objects we use the curly braces.
+What we have to do is to provide the variable names that exactly match the property names that we want to retrieve from the object.
+The order of the elements doesnt matter
+const { name, openingHours, categories } = restaurant;
+
+
+If we wanted variable names to be different:
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+We do it like this. First we put the real property name and then : and we write the name we want
+
+// Default values
+const { menu = [], starterMenu: starters = [] } = restaurant;
+menu will be equal to [] beacuse it doenst exist, we created it, and starters will be equal to its real value. So the default value will only be applied if there is no real value
+
+// Mutating variables
+let a = 111;
+let b = 99;
+const obj = { a: 23, b: 7, c: 14 };
+({ a, b } = obj);
+
+{ a, b } = obj - You cant start line of code with { beacuse JS excepts code block, so we put everrything in () like this
+({ a, b } = obj)
+
+// Nested Objects
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+}
+
+const {
+  fri: { open: o, close: c },
+} = openingHours;
+console.log(o, c);
+
+// If we pass object as the argument then the function will immediately destructure tha object
+const deliverObject = {
+  time: '23:30',
+  mainIndex: 2,
+  starterIndex: 2,
+}
+
+const restaurant = {
+ orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    
+  }) {
+    console.log(
+      `Order recieved: ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be at ${time}`
+    );
+  },
+}
+
+restaurant.orderDelivery(deliverObject); -- We can also put variables directly into the function like this:
+restaurant.orderDelivery({
+  time: '23:30',
+  mainIndex: 2,
+  starterIndex: 2,
+})
+
+So in restaurant object we have orderDelivery function with default values. When calling it we can put the new values, or we can leave the default values by not writing the variable
+
+
+-- Spread operator (...)
+What the spread operator does is to basically take all the values
+out of array, and then write them individually
+We can use the spread operator whenever we would otherwise write multiple values separated by commas.
+We can use the spread operator when we pass arguments into functions.
+
+Spread operator takes all the element from the array
+and it also deasnt create new variables. And as a consequence, we can only use it in places
+where we would otherwise write values separated by commas
+
+Spread operator works on all Iterables
+Iterables are arrays, strings, maps, and sets, but not objects
+
+-- Rest pattern (...)
+Rest pattern basically collects the elements that are unused in the destructuring assignment.
+Rest is found on the left side of the = sign
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+
+Rest pattern compreses all values it gets into an array(It works opposite of spread operator)
+
+-- Short circuiting (&& ||)
+&& (and) looks if every value is truthy, if not, then it will print out first falsy value
+console.log(23 && 'string' && 0 && 'Hello')
+It will print out 0 beacuse that is the first falsy value
+If there are no falsy values then it will print out last truthy value it encounters
+
+||(or) looks if there are any truthy values if there are it will print the first one it encounters
+console.log(23 && 'string' && 0 && 'Hello')
+Here it will print out 23 beacuse that is the first truthy value it encounters
+
+-- The Nullish Coalescing Operator (??)
+Nullish values: null and undefined (NOT 0 or '')
+
+const nullishCoalescingOperator = false ?? 10
+Here we will get nullishCoalescingOperator = false beacuse nullish operator will act like false is actually truthy value
+If Instead Of false we had null or undefined value then the outcome would be 10
+
+-- Logical Assignment Operators
+
+let variableOr = 10 > 4 || 'Team 1 ima vise sansi za pobedu';
+Here the value of variableOr will be true beacuse 10>4 is true 
+
+let variableAnd = 4 < 10 && 'Team 2 ima vise sansi za pobedu';
+Here the value will be 'Team 2 ima vise sansi za pobedu' beacuse there are no falsy values, and last truthy is the given string sto that will be its value
+
+let message = variableOr || variableAnd;
+Here the value will be the same value as the variableOr because it is the first truthy value it encounters
+
+-- Optional chaining (?.)
+If soemthing doesnt exist it retunrs undefined
+
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+
+  console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours?.mon?.open);
+
+optional chaining and nullish Coalescing operator almost always go together
+
+-- Object Keys, Values, Entries
+Object.keys gives us the name of the property
+Object.values gives us the value of the property
+object.entries gives us the entire object (both the name and the value of property)
+
+-- Sets
+Set is basically just a cloection of unique values, so that means that sets cannot have any duplicates.
+In sets there are no indexes and there is no way of  getting that values since it doesnt exists
+
+-- Maps
+A map is a data structure that we can use to map values to keys.
+Like in objescts data is stored in key value in maps.
+Differnece is that in maps, the keys can have any type.(In objects keys are basically always strings)
+
+-- Which Data Structure to Use?
+where data can actually come from. So there are essentially three sources of data.
+
+- First, the data can be written within the program source code itself like status messages that will be displayed on a webpage based on user actions.
+- Second, data can come from the user interface. So from the webpage, it can either be data that the user inputs into some form or data test already written somehow in the DOM.
+
+- Finally, data can come from external sources which is usually a web API.
+
+So the first decision is this do we just need a simple list of values? If so, then we're gonna use an array or a set. But on the other hand if we need key value pairs, then we need an object or a map.
+
+Arrays vs Sets
+Now you should use arrays whenever you need to store values in order and when these values might contain duplicates. Also you should always use arrays when you need to manipulate data because there are a ton of useful array methods.
+
+Now sets on the other hand should only be used when you are working with unique values, besides that you can also use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays.
+
+Objects vs Maps
+You should use maps when you simply need to map keys to values and also when you need keys that are not strings because as we saw in the last video, that can be very powerful sometimes. Now, if you need functions as values then you should absolutely use an object for that. So in objects, these functions are then called methods and you can use the this keyword to access properties of the same object, which is impossible in maps. Also, when working with JSON data, you will probably be using objects for that as well
+
+
+------------------------------------------------------------------------------------------------------------------
+// A Closer Look at functions //
+
+-- How Passing Arguments Works: Value vs. Reference 
+
+Passing a primitive type to a function is really just the same as creating a copy, outside of the function. So the value is simply copied.
+On the other hand, when we pass an object to a function, it is really just like copying an object. And so whatever we change in a copy will also happen in the original.
+
+-- First-Class and Higher-Order Functions
+A higher order function is either a function that receives another function as an argument, or a function that returns a new function.
+
+The callback functions. We do not call them ourselves. But instead we call JavaScript to basically tell them later.
+
+Why our callback functions so much used in JavaScript and why are they so helpful?
+Well, the first big advantage of this is that it makes it easy to split up or code into more reusable and interconnected parts.
+
+But there is a second and way more important advantage, which is the fact that callback functions allow us to create abstraction.
+what abstraction means, is that we hide the detail of some code implementation because we don't really care about all that detail. And this allows us to think about problems at a higher more abstract level.
+
+-- The call and apply Methods
+We use them to specify from where this keyword should takee values
+
+  functionName(flightNum, name) {
+  this.someArrayInTheObject.push({
+      flight: `${this.airline} flight ${this.iataCode}${flightNum}`,
+      name,
+    });
+  },
+functionName.call(Name of the objects, arguments);
+
+Apply works the same but instead of writing arguments one at the time, it takes an array
+functionName.apply(Name of the object, array);
+
+We can use call even if we need to put in the array
+functionName.call(Name of the object, ...array)
+
+-- The Bind Method
+const variableName = function.bind(objectName);
+
+
+partial application means that a part of the arguments of the original function are already applied, so which means, already set.
+
+const variableName = function.bind(objectName,23);
+
+
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+Without bind method this keyword would refer to the element on which handler(addEventListener) is attached to
+
+-- Immediately Invoked Function Expressions (IIFE)
+
+It's important to hide variables. And scopes are a good tool for doing this. And this is also the reason why The Immediately Invoked Function Expressions were invented.
+
+-- Closures
+So a function always has access to the variable environment of the execution context in which it was created, even after a debt execution context is gone. And this last part is really important. The closure is then basically this variable environment attached to the function, exactly as it was at the time and place that the function was created.
+
+Closure has PRIORITY over the scope chain
+
+Closure is the closed over variable environment of the execution context in which a function was created even after that execution context is gone, or in other words, even after the function to which the execution context belongs has returned.
+
+Closure gives a function access to all the variables of its parent function. So the function in which it is defined even after that parent function has returned. So the function keeps a reference to its outer scope even after that outer scope is gone, which basically preserves the scope chain throughout time.
+
+Closure makes sure that a function does never lose connection to the variables that existed at the function's birthplace. It remembers the variables, even after the birthplace is gone. It's like a person who doesn't lose connection to their hometown. In this analogy, the person is the function and the hometown is the function's parents scope, and the function then doesn't lose the connection to the variables stored in this parent's scope.
+
+Finally, some people like to think of this attached variable environment as a backpack. So in this analogy, a function has a backpack, which it carries around wherever it goes. And this backpack contains all the variables that were present in the environment in which the function was created. Then whenever a variable can't be found in the function scope, JavaScript will look into the backpack and take the missing variable from there.
+
+Also, there is no way for us to explicitly access closed over variables. That's because closures are not like a tangible thing. They're not like an object or so that we can access. So we cannot just reach into a closure and take variables from it. That's impossible because a closure is just an internal property of a function.
+
+-----------------------------------------------------------------------------------------------------
+// Working With Arrays //
+
+--Simple Array Methods
+
+SPLICE - mutates original array
+
+-- forEach()
+
+We can use forEach method instead of for loop. Differences are when we use entries in loop we have index,value, but in forEach method we have value,index,entire array/map
+
+forEach() can be used for arrays maps and sets
+
+--  Data Transformations: map, filter, reduce
+
+map returns a new array containing the results of applying an operation on all original array elements
+
+filter returns a new array containing the array elements that passed a specified test condition
+
+reduce boils ("reduces") all array elements down to one single value(e.g. adding all elements together)
+
+-- Which Array Method to Use?
+
+// To mutate original array
+  Add to original:
+    .push (end)
+    .unshift (start)
+  Remove from original:
+    .pop (end)
+    .shift (start)
+    .splice (any)
+  Others:
+    .reverse
+    .sort
+    .fill
+
+// A new array
+  Computed from original:
+    .map (loop)
+  Filtered using condition:
+    .filter
+  Portion of original:
+    .slice
+  Adding original to other:
+    .concat
+  Flatening the original:
+    .flat
+    .flatMap
+
+// An array index
+  Based on value:
+    .indexOf
+  Based on test condition:
+    .findIndex
+  
+// An array element
+  Based on test condition:
+    .find
+
+// Know if array includes
+  Based on value:
+    .includes
+  Based on test condition:
+    .some
+    .every
+  
+// A new string
+  Based on separator string:
+    .join
+
+// To transform value
+  Based on accumulator:
+    .reduce (Boil down array to singe value of ANY type)
+  
+// To just loop array
+  Based on callback:
+    .forEach (Does not create a new array, just loops over it)
+  
+-----------------------------------------------------------------------------------------------------
+// Advanced DOM and Events //
+
+-- How the DOM really works
+
+// Allows us to make JS interact with the browser
+// We can write JS to create, modify and delete HTML elements;
+set styles, classes and attributes; and listen and respond to events
+// DOM tree is generated from and HTML document, which we can then interact with
+// DOM is very complex API(Application Programming Interface) that contains lots of methods and properties to interact with the DOM tree
+
+-- Selecting, Creating, and Deleting Elements
+// Selecting elements:
+document.documentElement - Whole HTML
+document.head - HTML header
+document.body - HTML body
+.querySelector - Used to select class, id, or tag
+.querySelectorAll - Used to select all elements with the same class
+.getElementsByTagName('button') - Used to sellect all elements with the same tag
+.getElementsByClassName - Used to select all elements with same class name
+
+// Creating and inserting elements:
+insertAdjacentHTML(position, text):
+position:
+"beforebegin"
+Before the element. Only valid if the element is in the DOM tree and has a parent element.
+"afterbegin"
+Just inside the element, before its first child.
+"beforeend"
+Just inside the element, after its last child.
+"afterend"
+After the element. Only valid if the element is in the DOM tree and has a parent element.
+
+text:
+The string to be parsed as HTML or XML and inserted into the tree.
+
+.prepend - Ads element as first child on an element
+.append - Ads element as last child on an element
+.before -  inserts  before element
+.after - inserts after element
+
+// Delete:
+.remove()
+variable.parentElement.removeChild(variable);
+
+-- Event Propagation: Bubbling and Capturing
+Capturing phase happens, where the event then travels all the way down from the document route to the target element. And as the event travels down the tree, it will pass through every single parent element of the target element.
+As soon as the event reaches the target,
+
+The target phase begins, where events can be handled right at the target. And as we already know, we do that with event listeners, such as this one. So event listeners wait for a certain event to happen on a certain element, and as soon as the event occurs, it runs the attached callback function.
+
+After reaching the target, the event then actually travels all the way up to the document route again, in the so-called bubbling phase. So we say that events bubble up from the target to the document route. And just like in the capturing phase, the event passes through all its parent elements, and really just the parents, so not through any sibling elements. So as an event travels down and up the tree, they pass through all the parent elements, but not through any sibling element.
+
+Adding the third paramater (true, false is default value) our variable is waiting for capture while others wait for bubble
+
+// Efficient Script Loading: defer and async
+
+Async attribute
+
+Well, this is what the loading process looks like when we use async script loading in the head of the document. So as you can see, the difference is that the script is loaded at the same time as the HTML is parsed. So in an asynchronous way, so that's already an advantage. However, the HTML parsing still stops for the script execution. So the script is actually downloaded asynchronously. But then it's executed right away in a synchronous way. And so the HTML code has to wait for being parsed.
+Another very important aspect is that async scripts are not guaranteed to be executed in the exact order that they are declared in the code. So the script that arrives first gets executed first.
+
+Defer attribute
+when deferring what happens is that the script is still loaded asynchronously. But the execution of the script is deferred until the end of the HTML parsing. So in practice, loading time is similar to the async attribute, but with the key difference that would defer the HTML parsing is never interrupted, because the script is only executed at the end. And many times, this is exactly what we want.
+Using the defer attribute guarantees that the scripts are actually executed in the order that they are declared or written in the code.
+
+For example, if your script relies on some third party library that you need to include, you will include that library before your own script, so that your script can then use the library's code. And in this case, you have to use defer and not async. Because defer will guarantee the correct order of execution. Now, for third party scripts, where the order does not matter, for example, an analytics software like Google Analytics, or an ad script, or something like that, then in this case, you should totally use async. So for any code that your own code will not need to interact with async is just fine.
+
+Only modern browsers support defer and async
+
+-----------------------------------------------------------------------------------------------------
+// Object-Oriented Programming (OOP) With JavaScript //
+Object-oriented programming(OOP) is a programming paradigm based on the concept of objects.
+We cas use objects to model (describe) real-world or abstract features.
+Object may contain data (properties) and code(methods). By using objects, we pack data and corresponding behavior into one block.
+In OOP, objects are self-contained pieces/blocks of code
+Objects are building blocks of applications, and interact with one another.
+interactions happen through a public interface (API): methods that the code outside of the object can acces and use to communicate with the object
+OOP was developed with the goal of organizing code, to make it more flexible and easier to maintain(avoid "spaghetti code") 
+
+Abstraction
+Abstraction basically means to ignore or to hide details that don't matter. This allows us to get an overview perspective of whatever it is that we're implementing instead of messing with details that don't really matter to our implementation.
+
+Encapsulation
+Encapsulation basically means to keep some properties and methods private inside the class so that they're not accessible from outside the class. However, some methods can, of course, be exposed as a public interface, which we call API.
+
+Inheritance
+Inheritance makes all properties and methods of a certain class available to a child class, which of course then forms a hierarchy between these two classes. And the goal of this is to reuse logic that is common to both of the classes.
+
+Polymorphism
+in simple terms, polymorphism means that a child class can overwrite a method that it inherited from a parent class.
+
+// OOP in JavaScript
+Objects (instances) are instantiated from a class, which functions like a blueprint.
+
+Objects are linked to a prototype object. So prototypal inheritance means that all objects that are linked to a certain prototype object can use the methods and properties that are defined on that prototype.
+
+Behavior is delegated to the linked prototype object.
+
+Constructor functions are a way of creating objects programmatically, using a function which will also set the new object's prototype. And this is actually how built-in objects like arrays or maps or sets are implemented. Also, this is how OOP has been done in JavaScript basically since the beginning.
+
+So this means that ES6 classes are basically just a layer of obstruction over constructor functions. So, it's really just a nicer syntax that makes it easier for newcomers to do OOP in JavaScript. But behind the scenes, ES6 classes are actually implemented with constructor functions. And so they also use prototypal inheritance.
+
+There's also the object.create() which is basically the easiest and most straightforward way of linking an object to a prototype object.
+
+// ES6 Classes
+1. Classes are NOT hoisted
+2. Classes are firs-class citizens
+3. Classes are executed in strict mode
+
+// Encapsulation: Protected Properties and Methods
+
+There are two big reasons why we need encapsulation and data privacy. So first it is to prevent code from outside of a class to accidentally manipulate or data inside the class. So this is also the reason why we implement a public interface. So we are not supposed to manually mess with this property and therefore we should encapsulate it. The second reason is that when we expose only a small interface so a small API consisting only of a few public methods then we can change all the other internal methods with more confidence. Because in this case, we can be sure that external code does not rely on these private methods. And so therefore our code will not break when we do internal changes. So that's what encapsulation and data privacy are and the reasons for it.
+
+However JavaScript classes actually do not yet support real data privacy and encapsulation.
+
+// Encapsulation: Private Class Fields and Methods
+1) Public fields
+2) Private fields
+3) Public methods
+4) Public methods
+
+// ES6 Classes Summary
+Classes are just 'syntactic sugar' over constructor functions
+Classes are not hoisted
+Classes are first-class citizens
+Class body is always executed in strict mode
+
+-----------------------------------------------------------------------------------------------------
+// Mapty App: OOP, Geolocation, External Libraries, and More! //
+
+// How to plan a Web project
+1. User Stories
+So a user story is basically a description of the application's functionality from the user's perspective. And then all the user stories put together will clearly describe the functionality of the entire application.
+2. Features
+3. Flowchart - What we will build
+4. Architecture - How we will build it
+---> DEVELOPMENT STEP
+
+1. uSER Stories:
+User story: Description of hte applications functionality from the users perspective.
+Common format: As a [type of user], i want [an action] so that [a benefit] - Who?, What?, Why?
+
+-----------------------------------------------------------------------------------------------------
+// Asynchronous JavaScript: Promises, Async/Await, and AJAX //
+
+// Asynchronous JavaScript, AJAX and APIs
+
+Most cose is synchronous;
+Synchronous code is executed line by line;
+Each line of code waits for previous line to finish;
+
+Asynchronous code is executed after a task that runs in the background finishes;
+Asynchronous code is non-blocking;
+Execution doesnt wait for an asynchronous task to finish its work
+Callback functions alone do NOT make code asynchronous!
+
+AJAX:
+AJAX stands for asynchronous JavaScript and XML, and basically it allows us to communicate with remote web servers in an asynchronous way. Now in practice, we make Ajax calls in our code in order to request some data from a web server dynamically. So without reloading the page so that we can use that data in our application dynamically.
+
+API:
+API is basically a piece of software that can be used by another piece of software in order to basically allow applications to talk to each other and exchange information.
+
+There are many types of APIs in web development:
+DOM API
+Geolocation API
+Own Class API
+"Online" API(or just API) - Online API is essentially an application running on a web server, which receives requests for data, then retrieves this data from some database and then sends it back to the client.
+
+We can build our own web APIs or use 3rd-party APIs
+
+// Promises and the Fetch API
+Promise:
+Definition of a promise is that it's an object that is used basically as a placeholder for the future result of an asynchronous operation.
+
+Promise(less formal): A cointainer for an asynchronously delivered value
+
+Promise(even less formal): A container for a future value
+
+// Asynchronous Behind the Scenes: The Event Loop
+Concurrency model: How JS handles multiple tasks happening at the same time
+
+WEB APIs is place where asynchronous tasks run
+
+EVENT LOOP decides when each callback is executed: ORCHESTRATION
+
+MICROTASKS QUEUE: Like a callback queue,but for callbacks related to promises. Has priority over callback queue
+
+// Returning Values from Async Functions
+when we use async function we need to manually throw an error since async function doesnt reject
+
+// Other Promise Combinators: race, allSettled and any
+
+Promise.all([]) - it loads everything at the same time. It will shortcircuit if some error happens. As result we get all fulfilled promises(if there are no rejected promises)
+Promise.race([]) - we get only one result. Result is first fulfilled or rejected promise 
+Promise.allSetled([]) - same like all but it doesnt shortcircuit. As result we get all results rejected and fulfilled
+Promise.any([]) - it ignores rejected promises and result will always be fulfilled promise, unless there are no fulfilled promises. Result is first fulfilled promise
+
+-----------------------------------------------------------------------------------------------------
+// Modern JavaScript Development: Modules, Tooling, and Functional //
+
+// An Overview of Modules in JavaScript
+Module is a reusable piece of code that encapsulates implementation details of a certain part of our project.
+
+Compose software: Modules are small building blocks that we put together to build complex applications;
+
+Isolate components: Modules can be developed in isolation without thinking about the entire codebase;
+
+Abstract code: Implement low-level code in modules and import these abstraction into other modules;
+
+Organized code: Modules naturally lead to more organized codebase;
+
+Reuse code: Modules allow us to easily reuse the same code, even across multiple projects 
+
+-- ES6 modules
+So ES6 modules are modules that are actually stored in files and each file is one module.
+
+IMPORTING MODULES BEFORE EXECUTION:
+Modules are imported synchronously
+Possible thanks to top-level ('static') imports,
+which make imports known before execution
+This makes bundling and dead code elimination possible
+
+IMPORTS ARE NOT COPIES OF EXPORTS, THEY ARE INSTEAD LIKE A LIVE CONNECTION, THEY POINT TO THE SAME PLACE IN MEMORY
+
+// Top-Level await (ES2022)
+It's very important to remember that using top-level await, so await outside of any async function will block the entire module in a way that we really couldn't block code execution before. And so this is not only a really helpful tool, but also one that we need to use with great care.
+
+// Writing Clean and Modern JavaScript
+
+-- Readable code
+Write code so that others understand it
+Write code so that you can understand it in 1 year
+Avoid too 'clever' and overcomplicated solutions
+Use descriptive variable names: what they contain
+Use descriptive function names: what they do
+
+-- General
+Use DRY principle (refactor your code)
+Dont pollute global namespace, encapsulate instead
+Dont use var 
+Use strong type checks (=== and !==)
+
+-- Functions
+Generally functions should only do one thing
+Dont use more than 3 function paramaters
+Use default paramaters whenever possible
+Generally, return same data type as received
+Use arrow functions when they make code more readable
+
+-- OOP
+Use ES6 classes 
+Encapsulate data and dont mutate it from outside class 
+Implement method chaining
+Do not use arrow functions as methods (in regular objects)
+
+-- Avoid nested code  
+Use early return (guard clauses)
+Use ternary (conditional) or logical operators instead of IF
+use multiple IF instead of if/else if 
+Avoid for loops, use array methods instead
+Avoid callback-based asynchronous APIs
+
+-- Asynchronous code
+Consume promises with async/await for best readability
+Whenever possible, run promises in parallel(Promise.all)
+Handle errors and promise rejections
+
+//  Declarative and Functional JavaScript Principles
+
+IMPERATIVE:
+Programmer explains 'HOW to do things'
+We explain the computer every single step it has to follow to achieve a result
+
+const arr = [2,4,6,8]
+const doubled = []
+for(let i =0;i<arr.length;i++) doubled[i] =  arr[i] *2
+
+DECLARATIVE
+Programmer tells 'WHAT to do'
+We simply describe the way the computer should achieve the result
+The HOW (step-by-step instructions) gets abstracted away
+
+const arr = [2,4,6,8]
+const doubled = arr.map(n=>n*2)
+
+Functional programming, is basically a declarative paradigm, which is based on the idea of writing software, simply by combining multiple so called pure functions, while avoiding side effects and mutating data.
+
+Side effect is basically simply a modification of any data that's outside of a function. So, for example, mutating any variable that is external to the function is causing a side effect. So basically, any variable that is outside of the scope of the function, all right? Now, data does not only refer to variables, so for example, logging stuff to the console, or also changing something in the DOM, is also causing side effects.
+
+Pure function is a function without side effects. So, basically a function that does not mutate any external variables, and that does also not depend on any external variables. So basically, if we give the same inputs to a pure function, it will always return the same output and again, that's because it does not depend on any external variables, and it also does not manipulate them.
+
+Immutabilty: State (data) is never modified! Instead, state is copied and the copy is mutated and returned
+
+FUNCTIONAL PROGRAMMING TECHNIQUES
+
+Try to avoid data mutations
+Use built in methods that dont produce side effects
+Di data transformations with methods such as .map(), .filter() and .reduce()
+Try to avoid side effects in functions: this is of course not always possible!
+
+DECLARATIVE SYNTAX
+
+Use array and object destructuring
+Use the spread operator(...)
+Use ternary (conditional) operator
+Use template literals
